@@ -63,31 +63,28 @@ pipeline {
     }
     
     post {
-    	success {
-        	echo 'Build and tests completed successfully!'
-        	emailext (
-            		subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-            		body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                		<p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-            	to: "erubielramos9@gmail.com",
-            	mimeType: 'text/html',
-            	from: "jenkins@localhost"
+        success {
+            echo 'Build and tests completed successfully!'
+            emailext(
+                subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                    <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>""",
+                to: "erubielramos9@gmail.com",
+                mimeType: 'text/html'
             )
         }
         
         failure {
             echo 'Build or tests failed!'
             emailext(
-                to: "erubielramos9@gmail.com",
                 subject: "FAILED: Snake Game Build ${env.BUILD_NUMBER}",
                 body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                	<p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
+                    <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>""",
                 to: "erubielramos9@gmail.com",
-		mimeType: 'text/html'
-		from: "jenkins@localhost"
+                mimeType: 'text/html'
             )
         }
-     }  
+        
         always {
             echo 'Pipeline finished'
         }
