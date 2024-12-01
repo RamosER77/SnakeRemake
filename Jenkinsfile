@@ -87,7 +87,7 @@ pipeline {
 		from: "jenkins@localhost.com"
             )
         }
-        
+      }  
         always {
             echo 'Pipeline finished'
         }
