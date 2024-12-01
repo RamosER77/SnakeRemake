@@ -2,11 +2,22 @@ pipeline {
     agent any
     
     tools {
+        jdk 'JDK20'
         maven 'M3'
-        jdk 'JDK17'
     }
     
     stages {
+        stage('Environment') {
+            steps {
+                sh '''
+                    echo "Java version:"
+                    java -version
+                    echo "Maven version:"
+                    mvn -version
+                '''
+            }
+        }
+        
         stage('Checkout') {
             steps {
                 git branch: 'master', 
