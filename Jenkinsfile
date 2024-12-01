@@ -71,7 +71,7 @@ pipeline {
                 		<p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
             	to: "erubielramos9@gmail.com",
             	mimeType: 'text/html',
-            	from: "jenkins@localhost.com"
+            	from: "jenkins@localhost"
             )
         }
         
@@ -84,10 +84,10 @@ pipeline {
                 	<p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
                 to: "erubielramos9@gmail.com",
 		mimeType: 'text/html'
-		from: "jenkins@localhost.com"
+		from: "jenkins@localhost"
             )
         }
-      }  
+     }  
         always {
             echo 'Pipeline finished'
         }
