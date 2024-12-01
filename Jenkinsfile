@@ -63,16 +63,15 @@ pipeline {
     }
     
     post {
-        success {
-            echo 'Build and tests completed successfully!'
-            emailext(
-                to: "erubielramos9@gmail.com",
-                subject: "SUCCESS: Snake Game Build ${env.BUILD_NUMBER}",
-                body: """<p>Build Status: SUCCESS</p>
-                    <p>Build Number: ${env.BUILD_NUMBER}</p>
-                    <p>Check console output at: <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>
-                    <p>Test Results: All tests passed successfully!</p>""",
-                mimeType: 'text/html'
+    	success {
+        	echo 'Build and tests completed successfully!'
+        	emailext (
+            		subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+            		body: """<p>SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                		<p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
+            	to: "erubielramos9@gmail.com",
+            	mimeType: 'text/html',
+            	from: "jenkins@localhost.com"
             )
         }
         
@@ -81,11 +80,11 @@ pipeline {
             emailext(
                 to: "erubielramos9@gmail.com",
                 subject: "FAILED: Snake Game Build ${env.BUILD_NUMBER}",
-                body: """<p>Build Status: FAILED</p>
-                    <p>Build Number: ${env.BUILD_NUMBER}</p>
-                    <p>Check console output at: <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>
-                    <p>Failed Stage: ${currentBuild.result}</p>""",
-                mimeType: 'text/html'
+                body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                	<p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
+                to: "erubielramos9@gmail.com",
+		mimeType: 'text/html'
+		from: "jenkins@localhost.com"
             )
         }
         
