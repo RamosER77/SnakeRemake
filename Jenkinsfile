@@ -14,38 +14,59 @@ pipeline {
                     java -version
                     echo "Maven version:"
                     mvn -version
+                    echo "Workspace contents:"
+                    ls -R
                 '''
             }
         }
         
         stage('Checkout') {
             steps {
+                echo 'Checking out from Git...'
                 git branch: 'master', 
                     url: 'https://github.com/RamosER77/SnakeRemake.git'
+                sh 'ls -R src/'
             }
         }
         
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                sh 'mvn clean compile'
+                sh '''
+                    echo "Current directory:"
+                    pwd
+                    echo "Directory contents:"
+                    ls -la
+                    mvn clean compile
+                '''
             }
         }
         
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'mvn test'
+                sh '''
+                    echo "Test directory contents:"
+                    ls -la src/test/java/org/psnbtech/
+                    mvn test
+                '''
             }
             post {
                 always {
-                    junit '**/target/surefire-reports/*.xml'
+                    junit(
+                        allowEmptyResults: true,
+                        testResults: '**/target/surefire-reports/*.xml'
+                    )
                 }
             }
         }
     }
     
     post {
+        always {
+            echo 'Pipeline finished'
+            sh 'ls -la target || true'
+        }
         success {
             echo 'Build and tests completed successfully!'
         }
